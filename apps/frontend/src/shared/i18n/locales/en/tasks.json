@@ -82,6 +82,7 @@
     "dropHere": "Drop here",
     "showArchived": "Show archived",
     "addTaskAriaLabel": "Add new task to backlog",
+    "importFlowchart": "Import from flowchart",
     "queueAllAriaLabel": "Move all tasks to queue",
     "closeTaskDetailsAriaLabel": "Close task details",
     "editTask": "Edit task",

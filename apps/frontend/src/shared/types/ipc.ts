@@ -403,6 +403,11 @@ export interface ElectronAPI {
 
   // Dialog operations
   selectDirectory: () => Promise<string | null>;
+  selectFile: (options?: {
+    title?: string;
+    filters?: Array<{ name: string; extensions: string[] }>;
+    defaultPath?: string;
+  }) => Promise<string | null>;
   createProjectFolder: (location: string, name: string, initGit: boolean) => Promise<IPCResult<CreateProjectFolderResult>>;
   getDefaultProjectLocation: () => Promise<string | null>;
 
@@ -912,6 +917,15 @@ export interface ElectronAPI {
   // Screenshot capture operations
   getSources: () => Promise<IPCResult<ScreenshotSource[]> & { devMode?: boolean }>;
   capture: (options: { sourceId: string }) => Promise<IPCResult<string>>;
+
+  // Flowchart import operations
+  parseFlowchart: (filePath: string) => Promise<IPCResult<import('./flowchart').TaskGraph>>;
+  validateFlowchart: (filePath: string) => Promise<IPCResult<import('./flowchart').FlowchartValidationResult>>;
+  generateFromFlowchart: (
+    filePath: string,
+    options: import('./flowchart').FlowchartGenerateOptions
+  ) => Promise<IPCResult<import('./flowchart').FlowchartGenerateResult>>;
+  listFlowchartPlugins: () => Promise<IPCResult<import('./flowchart').FlowchartPluginInfo[]>>;
 
   // Queue Routing API (rate limit recovery)
   queue: import('../../preload/api/queue-api').QueueAPI;

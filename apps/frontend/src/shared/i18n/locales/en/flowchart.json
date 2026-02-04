@@ -1,0 +1,90 @@
+{
+  "title": "Import Flowchart",
+
+  "steps": {
+    "upload": "Upload",
+    "preview": "Preview",
+    "configure": "Configure",
+    "generating": "Generating"
+  },
+
+  "upload": {
+    "dragOrClick": "Drag & drop or click to browse",
+    "dropHere": "Drop your file here",
+    "supportedFormats": "Supported formats: {{formats}}",
+    "parsing": "Parsing flowchart..."
+  },
+
+  "preview": {
+    "title": "Graph Preview",
+    "nodes": "nodes",
+    "edges": "edges",
+    "phase": "Phase"
+  },
+
+  "validation": {
+    "valid": "Flowchart is valid",
+    "invalid": "Flowchart has errors",
+    "readyToGenerate": "Ready to generate implementation plan",
+    "fixErrors": "Please fix {{count}} error(s) before generating",
+    "nodes": "Nodes",
+    "edges": "Edges",
+    "errors": "errors",
+    "warnings": "warnings",
+    "issues": "Issues"
+  },
+
+  "config": {
+    "title": "Configuration",
+    "specName": "Spec Name",
+    "specNamePlaceholder": "e.g., user-authentication",
+    "specNameHint": "Lowercase letters, numbers, and hyphens only",
+    "specNameError": "Invalid name. Use only lowercase letters, numbers, and hyphens.",
+    "options": "Generation Options",
+    "includeTesting": "Include Testing Phase",
+    "includeTestingDescription": "Add a testing phase for quality assurance",
+    "includeDocumentation": "Include Documentation",
+    "includeDocumentationDescription": "Generate documentation for the implementation"
+  },
+
+  "progress": {
+    "parsing": "Parsing",
+    "validating": "Validating",
+    "generatingPlan": "Generating Plan",
+    "generatingSpec": "Generating Spec",
+    "complete": "Complete"
+  },
+
+  "success": {
+    "title": "Spec Generated Successfully!",
+    "message": "Your flowchart has been converted into an Auto-Claude spec ready for execution.",
+    "generatedFiles": "Generated Files",
+    "specNumber": "Spec #",
+    "filesGenerated": "Files",
+    "phases": "Phases",
+    "subtasks": "Subtasks",
+    "openFolder": "Open Folder",
+    "viewSpec": "View Spec"
+  },
+
+  "nodeTypes": {
+    "start": "Start",
+    "end": "End",
+    "process": "Process",
+    "decision": "Decision",
+    "human_review": "Human Review"
+  },
+
+  "nodeDetails": {
+    "type": "Type",
+    "model": "Model",
+    "systemPrompt": "System Prompt",
+    "inputs": "Inputs",
+    "outputs": "Outputs",
+    "connections": "Connections"
+  },
+
+  "humanReview": "Manual",
+  "clearFile": "Clear File",
+  "generateSpec": "Generate Spec"
+}

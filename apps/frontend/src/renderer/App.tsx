@@ -46,6 +46,7 @@ import { Changelog } from './components/Changelog';
 import { Worktrees } from './components/Worktrees';
 import { AgentTools } from './components/AgentTools';
 import { WelcomeScreen } from './components/WelcomeScreen';
+import { FlowchartImporter } from './components/flowchart-import';
 import { RateLimitModal } from './components/RateLimitModal';
 import { SDKRateLimitModal } from './components/SDKRateLimitModal';
 import { AuthFailureModal } from './components/AuthFailureModal';
@@ -137,6 +138,7 @@ export function App() {
   // UI State
   const [selectedTask, setSelectedTask] = useState<Task | null>(null);
   const [isNewTaskDialogOpen, setIsNewTaskDialogOpen] = useState(false);
+  const [isFlowchartImporterOpen, setIsFlowchartImporterOpen] = useState(false);
   const [isSettingsDialogOpen, setIsSettingsDialogOpen] = useState(false);
   const [settingsInitialSection, setSettingsInitialSection] = useState<AppSection | undefined>(undefined);
   const [settingsInitialProjectSection, setSettingsInitialProjectSection] = useState<ProjectSettingsSection | undefined>(undefined);
@@ -879,6 +881,7 @@ export function App() {
                     tasks={tasks}
                     onTaskClick={handleTaskClick}
                     onNewTaskClick={() => setIsNewTaskDialogOpen(true)}
+                    onImportFlowchartClick={() => setIsFlowchartImporterOpen(true)}
                     onRefresh={handleRefreshTasks}
                     isRefreshing={isRefreshingTasks}
                   />
@@ -978,6 +981,22 @@ export function App() {
             projectId={activeProjectId || selectedProjectId!}
             open={isNewTaskDialogOpen}
             onOpenChange={setIsNewTaskDialogOpen}
+          />
+        )}
+
+        {/* Flowchart Importer Dialog */}
+        {(activeProjectId || selectedProjectId) && selectedProject && (
+          <FlowchartImporter
+            projectId={activeProjectId || selectedProjectId!}
+            projectDir={selectedProject.path}
+            open={isFlowchartImporterOpen}
+            onOpenChange={setIsFlowchartImporterOpen}
+            onImportComplete={() => {
+              // Refresh tasks after import
+              if (activeProjectId || selectedProjectId) {
+                loadTasks(activeProjectId || selectedProjectId!);
+              }
+            }}
           />
         )}
 

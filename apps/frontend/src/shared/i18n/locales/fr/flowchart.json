@@ -1,0 +1,90 @@
+{
+  "title": "Importer un organigramme",
+
+  "steps": {
+    "upload": "Télécharger",
+    "preview": "Aperçu",
+    "configure": "Configurer",
+    "generating": "Génération"
+  },
+
+  "upload": {
+    "dragOrClick": "Glissez-déposez ou cliquez pour parcourir",
+    "dropHere": "Déposez votre fichier ici",
+    "supportedFormats": "Formats supportés: {{formats}}",
+    "parsing": "Analyse de l'organigramme..."
+  },
+
+  "preview": {
+    "title": "Aperçu du graphe",
+    "nodes": "nœuds",
+    "edges": "arêtes",
+    "phase": "Phase"
+  },
+
+  "validation": {
+    "valid": "L'organigramme est valide",
+    "invalid": "L'organigramme contient des erreurs",
+    "readyToGenerate": "Prêt à générer le plan d'implémentation",
+    "fixErrors": "Veuillez corriger {{count}} erreur(s) avant de générer",
+    "nodes": "Nœuds",
+    "edges": "Arêtes",
+    "errors": "erreurs",
+    "warnings": "avertissements",
+    "issues": "Problèmes"
+  },
+
+  "config": {
+    "title": "Configuration",
+    "specName": "Nom de la spécification",
+    "specNamePlaceholder": "ex: authentification-utilisateur",
+    "specNameHint": "Lettres minuscules, chiffres et tirets uniquement",
+    "specNameError": "Nom invalide. Utilisez uniquement des lettres minuscules, des chiffres et des tirets.",
+    "options": "Options de génération",
+    "includeTesting": "Inclure la phase de test",
+    "includeTestingDescription": "Ajouter une phase de test pour l'assurance qualité",
+    "includeDocumentation": "Inclure la documentation",
+    "includeDocumentationDescription": "Générer la documentation pour l'implémentation"
+  },
+
+  "progress": {
+    "parsing": "Analyse",
+    "validating": "Validation",
+    "generatingPlan": "Génération du plan",
+    "generatingSpec": "Génération de la spécification",
+    "complete": "Terminé"
+  },
+
+  "success": {
+    "title": "Spécification générée avec succès!",
+    "message": "Votre organigramme a été converti en une spécification Auto-Claude prête à être exécutée.",
+    "generatedFiles": "Fichiers générés",
+    "specNumber": "Spec #",
+    "filesGenerated": "Fichiers",
+    "phases": "Phases",
+    "subtasks": "Sous-tâches",
+    "openFolder": "Ouvrir le dossier",
+    "viewSpec": "Voir la spécification"
+  },
+
+  "nodeTypes": {
+    "start": "Début",
+    "end": "Fin",
+    "process": "Processus",
+    "decision": "Décision",
+    "human_review": "Révision manuelle"
+  },
+
+  "nodeDetails": {
+    "type": "Type",
+    "model": "Modèle",
+    "systemPrompt": "Prompt système",
+    "inputs": "Entrées",
+    "outputs": "Sorties",
+    "connections": "Connexions"
+  },
+
+  "humanReview": "Manuel",
+  "clearFile": "Effacer le fichier",
+  "generateSpec": "Générer la spécification"
+}

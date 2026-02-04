@@ -153,6 +153,11 @@ Examples:
         help="Read task description from a file (useful for long specs)",
     )
     parser.add_argument(
+        "--flowchart",
+        type=Path,
+        help="Generate spec from a flowchart file (Lucidchart XML, Draw.io, BPMN)",
+    )
+    parser.add_argument(
         "--interactive",
         action="store_true",
         help="Run in interactive mode (gather requirements from user)",
@@ -228,6 +233,68 @@ Examples:
             "Direct mode: Building in project directory without worktree isolation",
             "warning",
         )
+
+    # Handle flowchart import if provided
+    if args.flowchart:
+        if not args.flowchart.exists():
+            print(f"Error: Flowchart file not found: {args.flowchart}")
+            sys.exit(1)
+
+        from flowchart import generate_plan
+
+        try:
+            print_section("FLOWCHART IMPORT", Icons.LIGHTNING)
+            print(f"  {muted('Flowchart file:')} {highlight(str(args.flowchart))}")
+            print()
+
+            result = generate_plan(
+                flowchart_path=args.flowchart,
+                project_dir=project_dir,
+                spec_name=args.flowchart.stem.lower().replace(" ", "-"),
+            )
+
+            print_status(f"Spec generated: {result['spec_dir']}", "success")
+            print(f"  {muted('Phases:')} {result['phase_count']}")
+            print(f"  {muted('Subtasks:')} {result['subtask_count']}")
+            print()
+
+            # Optionally start build (like normal flow)
+            if not args.no_build:
+                run_script = Path(__file__).parent.parent / "run.py"
+                spec_dir = Path(result["spec_dir"])
+                run_cmd = [
+                    sys.executable,
+                    str(run_script),
+                    "--spec",
+                    spec_dir.name,
+                    "--project-dir",
+                    str(project_dir),
+                    "--auto-continue",
+                    "--force",  # Skip approval for flowchart-generated specs
+                ]
+
+                if args.base_branch:
+                    run_cmd.extend(["--base-branch", args.base_branch])
+                if args.direct:
+                    run_cmd.append("--direct")
+
+                print_section("STARTING BUILD", Icons.LIGHTNING)
+                print(f"  {muted('Running:')} {' '.join(run_cmd)}")
+                print()
+
+                if is_windows():
+                    result = subprocess.run(run_cmd)
+                    sys.exit(result.returncode)
+                else:
+                    os.execv(sys.executable, run_cmd)
+
+            sys.exit(0)
+
+        except Exception as e:
+            capture_exception(e)
+            debug_error("spec_runner", f"Flowchart import failed: {e}")
+            print(f"\n\nFlowchart import failed: {e}")
+            sys.exit(1)
 
     # Handle task from file if provided
     task_description = args.task

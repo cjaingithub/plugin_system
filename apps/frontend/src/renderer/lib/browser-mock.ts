@@ -361,7 +361,28 @@ const browserMockAPI: ElectronAPI = {
   openLogsFolder: async () => ({ success: false, error: 'Not available in browser mode' }),
   copyDebugInfo: async () => ({ success: false, error: 'Not available in browser mode' }),
   getRecentErrors: async () => [],
-  listLogFiles: async () => []
+  listLogFiles: async () => [],
+
+  // File Dialog Operations
+  selectFile: async () => null,
+
+  // Flowchart Import Operations
+  parseFlowchart: async () => ({
+    success: false,
+    error: 'Flowchart parsing not available in browser mode'
+  }),
+  validateFlowchart: async () => ({
+    success: false,
+    error: 'Flowchart validation not available in browser mode'
+  }),
+  generateFromFlowchart: async () => ({
+    success: false,
+    error: 'Flowchart generation not available in browser mode'
+  }),
+  listFlowchartPlugins: async () => ({
+    success: false,
+    error: 'Plugin listing not available in browser mode'
+  })
 };
 
 /**

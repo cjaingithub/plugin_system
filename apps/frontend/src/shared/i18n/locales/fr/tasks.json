@@ -81,6 +81,7 @@
     "dropHere": "Déposer ici",
     "showArchived": "Afficher les archivées",
     "addTaskAriaLabel": "Ajouter une nouvelle tâche au backlog",
+    "importFlowchart": "Importer depuis un organigramme",
     "queueAllAriaLabel": "Déplacer toutes les tâches vers la file d'attente",
     "closeTaskDetailsAriaLabel": "Fermer les détails de la tâche",
     "editTask": "Modifier la tâche",

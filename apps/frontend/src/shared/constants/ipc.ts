@@ -164,6 +164,7 @@ export const IPC_CHANNELS = {
 
   // Dialogs
   DIALOG_SELECT_DIRECTORY: 'dialog:selectDirectory',
+  DIALOG_SELECT_FILE: 'dialog:selectFile',
   DIALOG_CREATE_PROJECT_FOLDER: 'dialog:createProjectFolder',
   DIALOG_GET_DEFAULT_PROJECT_LOCATION: 'dialog:getDefaultProjectLocation',
 
@@ -576,5 +577,11 @@ export const IPC_CHANNELS = {
   // Queue routing events (main -> renderer)
   QUEUE_PROFILE_SWAPPED: 'queue:profileSwapped',      // Task switched to different profile
   QUEUE_SESSION_CAPTURED: 'queue:sessionCaptured',    // Session ID captured from running task
-  QUEUE_BLOCKED_NO_PROFILES: 'queue:blockedNoProfiles' // All profiles unavailable
+  QUEUE_BLOCKED_NO_PROFILES: 'queue:blockedNoProfiles', // All profiles unavailable
+
+  // Flowchart import operations
+  FLOWCHART_PARSE: 'flowchart:parse',             // Parse flowchart file to TaskGraph
+  FLOWCHART_VALIDATE: 'flowchart:validate',       // Validate TaskGraph structure
+  FLOWCHART_GENERATE: 'flowchart:generate',       // Generate spec from TaskGraph
+  FLOWCHART_LIST_PLUGINS: 'flowchart:listPlugins' // List available flowchart plugins
 } as const;
