@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<mxfile host="app.diagrams.net" modified="2024-01-15T10:00:00.000Z" agent="Auto-Claude Test" version="22.1.0">
+  <diagram id="sample-workflow" name="Task Workflow">
+    <mxGraphModel dx="1000" dy="600" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="850" pageHeight="1100">
+      <root>
+        <mxCell id="0" />
+        <mxCell id="1" parent="0" />
+        
+        <!-- Start Node -->
+        <mxCell id="start-1" value="Start: User Authentication Feature" style="ellipse;whiteSpace=wrap;html=1;fillColor=#d5e8d4;strokeColor=#82b366;" vertex="1" parent="1">
+          <mxGeometry x="350" y="40" width="150" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Task 1: Setup -->
+        <mxCell id="task-1" value="Setup Authentication Module&#xa;&#xa;Create auth directory structure and base files" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="325" y="140" width="200" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrow from Start to Task 1 -->
+        <mxCell id="edge-1" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="start-1" target="task-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Task 2: Database Schema -->
+        <mxCell id="task-2" value="Create User Database Schema&#xa;&#xa;Define user table with email, password hash, timestamps" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="100" y="280" width="200" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Task 3: API Endpoints -->
+        <mxCell id="task-3" value="Implement Auth API Endpoints&#xa;&#xa;POST /login, POST /register, POST /logout" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="550" y="280" width="200" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrows from Task 1 to Tasks 2 and 3 (parallel) -->
+        <mxCell id="edge-2" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="task-1" target="task-2">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-3" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="task-1" target="task-3">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Task 4: JWT Implementation -->
+        <mxCell id="task-4" value="Implement JWT Token System&#xa;&#xa;Generate, validate, and refresh tokens" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="325" y="420" width="200" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrows from Tasks 2 and 3 to Task 4 -->
+        <mxCell id="edge-4" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="task-2" target="task-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        <mxCell id="edge-5" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="task-3" target="task-4">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Task 5: Frontend Integration -->
+        <mxCell id="task-5" value="Frontend Integration&#xa;&#xa;Add login/register forms and auth state management" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#dae8fc;strokeColor=#6c8ebf;" vertex="1" parent="1">
+          <mxGeometry x="325" y="560" width="200" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrow from Task 4 to Task 5 -->
+        <mxCell id="edge-6" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="task-4" target="task-5">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- Task 6: Testing -->
+        <mxCell id="task-6" value="Write Tests&#xa;&#xa;Unit tests, integration tests, E2E tests" style="rounded=1;whiteSpace=wrap;html=1;fillColor=#e1d5e7;strokeColor=#9673a6;" vertex="1" parent="1">
+          <mxGeometry x="325" y="700" width="200" height="80" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrow from Task 5 to Task 6 -->
+        <mxCell id="edge-7" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="task-5" target="task-6">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+        <!-- End Node -->
+        <mxCell id="end-1" value="Complete: Auth Feature Ready" style="ellipse;whiteSpace=wrap;html=1;fillColor=#f8cecc;strokeColor=#b85450;" vertex="1" parent="1">
+          <mxGeometry x="350" y="840" width="150" height="60" as="geometry" />
+        </mxCell>
+        
+        <!-- Arrow from Task 6 to End -->
+        <mxCell id="edge-8" style="edgeStyle=orthogonalEdgeStyle;rounded=0;orthogonalLoop=1;jettySize=auto;html=1;" edge="1" parent="1" source="task-6" target="end-1">
+          <mxGeometry relative="1" as="geometry" />
+        </mxCell>
+        
+      </root>
+    </mxGraphModel>
+  </diagram>
+</mxfile>

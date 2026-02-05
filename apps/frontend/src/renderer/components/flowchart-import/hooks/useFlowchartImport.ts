@@ -68,28 +68,11 @@ export function useFlowchartImport({
     setState((prev) => ({ ...prev, ...updates }));
   }, []);
 
-  // Handle file selection and parsing (from drag-drop or file dialog)
-  const handleFileSelect = useCallback(
-    async (file: File) => {
-      // For drag-drop files, we need to get the path
-      // Electron provides the path property on dropped files
-      const filePath = (file as File & { path?: string }).path;
-
-      if (!filePath) {
-        updateState({
-          error: 'Could not get file path. Please use the file browser instead.',
-        });
-        return;
-      }
-
-      await processFilePath(filePath, file.name);
-    },
-    [updateState]
-  );
-
   // Process a file path (from dialog or drag-drop)
   const processFilePath = useCallback(
     async (filePath: string, fileName?: string) => {
+      console.log('[FlowchartImport] Processing file:', filePath);
+      
       updateState({
         selectedFile: null,
         filePath,
@@ -98,17 +81,36 @@ export function useFlowchartImport({
       });
 
       try {
+        // Check if parseFlowchart API is available
+        if (!window.electronAPI?.parseFlowchart) {
+          throw new Error('Flowchart import API not available. Please restart the application.');
+        }
+
+        console.log('[FlowchartImport] Calling parseFlowchart...');
+        
         // Parse the flowchart
         const parseResult = await window.electronAPI.parseFlowchart(filePath);
+        
+        console.log('[FlowchartImport] Parse result:', parseResult);
 
         if (!parseResult.success || !parseResult.data) {
-          throw new Error(parseResult.error || 'Failed to parse flowchart');
+          const errorMsg = parseResult.error || 'Failed to parse flowchart';
+          // Provide more helpful error messages
+          if (errorMsg.includes('Python environment not initialized')) {
+            throw new Error('Python environment not ready. Please wait for the project to fully load, then try again.');
+          }
+          throw new Error(errorMsg);
         }
 
         const taskGraph = parseResult.data;
+        
+        console.log('[FlowchartImport] Parsed task graph with', taskGraph.nodes?.length || 0, 'nodes');
 
         // Validate the parsed graph
+        console.log('[FlowchartImport] Calling validateFlowchart...');
         const validationResult = await window.electronAPI.validateFlowchart(filePath);
+        
+        console.log('[FlowchartImport] Validation result:', validationResult);
 
         if (!validationResult.success || !validationResult.data) {
           throw new Error(validationResult.error || 'Failed to validate flowchart');
@@ -122,6 +124,8 @@ export function useFlowchartImport({
           .replace(/-+/g, '-')
           .toLowerCase();
 
+        console.log('[FlowchartImport] Success! Moving to preview step');
+        
         updateState({
           taskGraph,
           validationResult: validationResult.data,
@@ -130,18 +134,49 @@ export function useFlowchartImport({
           step: 'preview',
         });
       } catch (err) {
+        const errorMessage = err instanceof Error ? err.message : 'An error occurred';
+        console.error('[FlowchartImport] Error:', errorMessage);
         updateState({
           isLoading: false,
-          error: err instanceof Error ? err.message : 'An error occurred',
+          error: errorMessage,
         });
       }
     },
     [updateState]
   );
 
+  // Handle file selection and parsing (from drag-drop or file dialog)
+  const handleFileSelect = useCallback(
+    async (file: File) => {
+      console.log('[FlowchartImport] File dropped/selected:', file.name);
+      
+      // For drag-drop files, we need to get the path
+      // Electron provides the path property on dropped files
+      const filePath = (file as File & { path?: string }).path;
+
+      if (!filePath) {
+        console.warn('[FlowchartImport] No file path available from dropped file');
+        updateState({
+          error: 'Could not get file path. Please use the "Browse" button instead of drag-and-drop.',
+        });
+        return;
+      }
+
+      console.log('[FlowchartImport] File path from drop:', filePath);
+      await processFilePath(filePath, file.name);
+    },
+    [updateState, processFilePath]
+  );
+
   // Open file dialog to select a flowchart file
   const openFileDialog = useCallback(async () => {
+    console.log('[FlowchartImport] Opening file dialog...');
     try {
+      // Check if selectFile API is available
+      if (!window.electronAPI?.selectFile) {
+        throw new Error('File dialog API not available. Please restart the application.');
+      }
+
       const filePath = await window.electronAPI.selectFile({
         title: 'Select Flowchart File',
         filters: [
@@ -150,12 +185,18 @@ export function useFlowchartImport({
         ],
       });
 
+      console.log('[FlowchartImport] File selected:', filePath);
+
       if (filePath) {
         await processFilePath(filePath);
+      } else {
+        console.log('[FlowchartImport] File dialog cancelled');
       }
     } catch (err) {
+      const errorMessage = err instanceof Error ? err.message : 'Failed to open file dialog';
+      console.error('[FlowchartImport] Error opening file dialog:', errorMessage);
       updateState({
-        error: err instanceof Error ? err.message : 'Failed to open file dialog',
+        error: errorMessage,
       });
     }
   }, [processFilePath, updateState]);

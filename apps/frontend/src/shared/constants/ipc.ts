@@ -535,6 +535,9 @@ export const IPC_CHANNELS = {
   // Release events (main -> renderer)
   RELEASE_PROGRESS: 'release:progress',
 
+  // Plugin operations
+  PLUGIN_OPEN_FOLDER: 'plugin:openFolder',
+
   // Debug operations
   DEBUG_GET_INFO: 'debug:getInfo',
   DEBUG_OPEN_LOGS_FOLDER: 'debug:openLogsFolder',

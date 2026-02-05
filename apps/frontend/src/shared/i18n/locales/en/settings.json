@@ -48,6 +48,10 @@
     "terminal-fonts": {
       "title": "Terminal Fonts",
       "description": "Customize terminal font appearance"
+    },
+    "plugins": {
+      "title": "Plugins",
+      "description": "Extend Auto Claude with plugins"
     }
   },
   "apiProfiles": {

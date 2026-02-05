@@ -1,0 +1,101 @@
+{
+  "$schema": "../../packages/plugin-sdk/schema/plugin-manifest.json",
+  "id": "flowchart-importer",
+  "name": "Flowchart Importer",
+  "version": "1.0.0",
+  "description": "Import task workflows from flowchart files (Draw.io, BPMN). Automatically converts visual diagrams into Auto-Claude task structures.",
+  "author": "Auto-Claude Team",
+  "license": "MIT",
+  "keywords": ["flowchart", "import", "drawio", "bpmn", "tasks", "workflow"],
+  "engines": {
+    "auto-claude": ">=0.1.0"
+  },
+  "main": "dist/main.js",
+  "renderer": "dist/renderer.js",
+  "contributes": {
+    "commands": [
+      {
+        "id": "flowchart-importer.open",
+        "title": "Import from Flowchart",
+        "category": "Tasks",
+        "icon": "GitBranch"
+      },
+      {
+        "id": "flowchart-importer.openFile",
+        "title": "Import Flowchart File...",
+        "category": "Tasks",
+        "icon": "FileUp"
+      }
+    ],
+    "sidebar": {
+      "panels": [
+        {
+          "id": "flowchart-importer.panel",
+          "title": "Flowchart Import",
+          "icon": "GitBranch",
+          "order": 50
+        }
+      ]
+    },
+    "settings": {
+      "sections": [
+        {
+          "id": "flowchart-importer.autoValidate",
+          "title": "Auto-validate on Import",
+          "section": "Flowchart Importer",
+          "type": "boolean",
+          "default": true,
+          "description": "Automatically validate flowchart structure when importing"
+        },
+        {
+          "id": "flowchart-importer.includeTestingPhase",
+          "title": "Include Testing Phase",
+          "section": "Flowchart Importer",
+          "type": "boolean",
+          "default": true,
+          "description": "Add testing subtasks to generated specs"
+        },
+        {
+          "id": "flowchart-importer.includeDocumentation",
+          "title": "Include Documentation",
+          "section": "Flowchart Importer",
+          "type": "boolean",
+          "default": false,
+          "description": "Add documentation subtasks to generated specs"
+        }
+      ]
+    },
+    "menus": [
+      {
+        "command": "flowchart-importer.open",
+        "menu": "commandPalette",
+        "group": "import",
+        "order": 10
+      },
+      {
+        "command": "flowchart-importer.openFile",
+        "menu": "taskContextMenu",
+        "group": "import",
+        "order": 10
+      }
+    ],
+    "keybindings": [
+      {
+        "command": "flowchart-importer.open",
+        "key": "ctrl+shift+i",
+        "mac": "cmd+shift+i",
+        "when": "projectOpen"
+      }
+    ]
+  },
+  "activationEvents": [
+    "onCommand:flowchart-importer.open",
+    "onCommand:flowchart-importer.openFile",
+    "onView:flowchart-importer.panel"
+  ],
+  "permissions": [
+    "filesystem",
+    "storage"
+  ],
+  "enabledByDefault": true
+}

@@ -25,6 +25,13 @@ const NODE_ICONS: Record<NodeType, React.ComponentType<{ className?: string }>> 
   human_review: UserCheck,
 };
 
+// Default colors for unknown node types
+const DEFAULT_COLORS = {
+  bg: 'bg-gray-500/10',
+  border: 'border-gray-500',
+  text: 'text-gray-700 dark:text-gray-300',
+};
+
 export function GraphNode({
   node,
   isSelected = false,
@@ -33,8 +40,12 @@ export function GraphNode({
   className,
 }: GraphNodeProps) {
   const { t } = useTranslation(['flowchart']);
-  const colors = NODE_TYPE_COLORS[node.nodeType];
-  const Icon = NODE_ICONS[node.nodeType];
+  
+  // Handle both camelCase (nodeType) and snake_case (node_type) from backend
+  const nodeType = (node.nodeType || (node as unknown as { node_type?: string }).node_type || 'process') as NodeType;
+  
+  const colors = NODE_TYPE_COLORS[nodeType] || DEFAULT_COLORS;
+  const Icon = NODE_ICONS[nodeType] || Cog;
 
   return (
     <Tooltip>
@@ -79,7 +90,7 @@ export function GraphNode({
               {node.name}
             </p>
             <p className="text-xs text-muted-foreground truncate">
-              {t(`flowchart:nodeTypes.${node.nodeType}`)}
+              {t(`flowchart:nodeTypes.${nodeType}`)}
             </p>
           </div>
 
@@ -103,16 +114,16 @@ export function GraphNode({
           <div>
             <p className="font-medium">{node.name}</p>
             <p className="text-xs text-muted-foreground">
-              {t(`flowchart:nodeTypes.${node.nodeType}`)}
+              {t(`flowchart:nodeTypes.${nodeType}`)}
             </p>
           </div>
 
-          {node.systemPrompt && (
+          {(node.systemPrompt || (node as unknown as { system_prompt?: string }).system_prompt) && (
             <div>
               <p className="text-xs font-medium text-muted-foreground">
                 {t('flowchart:nodeDetails.systemPrompt')}
               </p>
-              <p className="text-xs line-clamp-2">{node.systemPrompt}</p>
+              <p className="text-xs line-clamp-2">{node.systemPrompt || (node as unknown as { system_prompt?: string }).system_prompt}</p>
             </div>
           )}
 

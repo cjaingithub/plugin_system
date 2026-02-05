@@ -901,6 +901,7 @@ export interface ElectronAPI {
     debugReport: string;
   }>;
   openLogsFolder: () => Promise<{ success: boolean; error?: string }>;
+  openPluginsFolder: () => Promise<{ success: boolean; error?: string }>;
   copyDebugInfo: () => Promise<{ success: boolean; error?: string }>;
   getRecentErrors: (maxCount?: number) => Promise<string[]>;
   listLogFiles: () => Promise<Array<{

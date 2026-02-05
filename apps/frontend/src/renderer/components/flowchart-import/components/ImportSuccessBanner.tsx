@@ -54,17 +54,28 @@ export function ImportSuccessBanner({
           {t('flowchart:success.generatedFiles')}
         </p>
         <div className="space-y-1.5 text-left">
-          {result.files.map((filePath, index) => {
-            const fileName = filePath.split(/[/\\]/).pop() || filePath;
-            return (
-              <FileItem
-                key={index}
-                name={fileName}
-                path={filePath}
-                icon={<FileText className="h-4 w-4" />}
-              />
-            );
-          })}
+          {/* Handle both array format and object format from backend */}
+          {Array.isArray(result.files) 
+            ? result.files.map((filePath, index) => {
+                const fileName = filePath.split(/[/\\]/).pop() || filePath;
+                return (
+                  <FileItem
+                    key={index}
+                    name={fileName}
+                    path={filePath}
+                    icon={<FileText className="h-4 w-4" />}
+                  />
+                );
+              })
+            : Object.entries(result.files as Record<string, string>).map(([name, path]) => (
+                <FileItem
+                  key={name}
+                  name={name}
+                  path={path}
+                  icon={<FileText className="h-4 w-4" />}
+                />
+              ))
+          }
         </div>
       </div>
 
@@ -72,7 +83,7 @@ export function ImportSuccessBanner({
       <div className="flex gap-6 text-sm">
         <div className="text-center">
           <p className="text-lg font-bold text-primary">
-            {result.specNumber}
+            {result.specNumber || (result as unknown as { spec_number?: string }).spec_number || '-'}
           </p>
           <p className="text-muted-foreground">
             {t('flowchart:success.specNumber')}
@@ -80,7 +91,9 @@ export function ImportSuccessBanner({
         </div>
         <div className="text-center">
           <p className="text-lg font-bold text-primary">
-            {result.files.length}
+            {Array.isArray(result.files) 
+              ? result.files.length 
+              : Object.keys(result.files || {}).length}
           </p>
           <p className="text-muted-foreground">
             {t('flowchart:success.filesGenerated')}

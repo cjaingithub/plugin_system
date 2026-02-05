@@ -23,6 +23,14 @@ from .batch_commands import (
 )
 from .build_commands import handle_build_command
 from .followup_commands import handle_followup_command
+from .plugin_commands import (
+    handle_plugin_disable_command,
+    handle_plugin_enable_command,
+    handle_plugin_info_command,
+    handle_plugin_install_command,
+    handle_plugin_list_command,
+    handle_plugin_uninstall_command,
+)
 from .qa_commands import (
     handle_qa_command,
     handle_qa_status_command,
@@ -280,6 +288,44 @@ Environment Variables:
         help="Actually delete files in cleanup (not just preview)",
     )
 
+    # Plugin management commands
+    plugin_group = parser.add_mutually_exclusive_group()
+    plugin_group.add_argument(
+        "--plugin-list",
+        action="store_true",
+        help="List all installed plugins",
+    )
+    plugin_group.add_argument(
+        "--plugin-install",
+        type=str,
+        metavar="PATH",
+        help="Install a plugin from a directory path",
+    )
+    plugin_group.add_argument(
+        "--plugin-uninstall",
+        type=str,
+        metavar="ID",
+        help="Uninstall a plugin by ID",
+    )
+    plugin_group.add_argument(
+        "--plugin-enable",
+        type=str,
+        metavar="ID",
+        help="Enable a plugin by ID",
+    )
+    plugin_group.add_argument(
+        "--plugin-disable",
+        type=str,
+        metavar="ID",
+        help="Disable a plugin by ID",
+    )
+    plugin_group.add_argument(
+        "--plugin-info",
+        type=str,
+        metavar="ID",
+        help="Show detailed information about a plugin",
+    )
+
     return parser.parse_args()
 
 
@@ -354,6 +400,31 @@ def _run_cli() -> None:
 
     if args.batch_cleanup:
         handle_batch_cleanup_command(str(project_dir), dry_run=not args.no_dry_run)
+        return
+
+    # Handle plugin commands
+    if args.plugin_list:
+        handle_plugin_list_command()
+        return
+
+    if args.plugin_install:
+        handle_plugin_install_command(args.plugin_install)
+        return
+
+    if args.plugin_uninstall:
+        handle_plugin_uninstall_command(args.plugin_uninstall)
+        return
+
+    if args.plugin_enable:
+        handle_plugin_enable_command(args.plugin_enable)
+        return
+
+    if args.plugin_disable:
+        handle_plugin_disable_command(args.plugin_disable)
+        return
+
+    if args.plugin_info:
+        handle_plugin_info_command(args.plugin_info)
         return
 
     # Require --spec if not listing

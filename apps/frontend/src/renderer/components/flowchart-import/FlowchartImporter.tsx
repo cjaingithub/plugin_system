@@ -20,6 +20,7 @@ import {
   Eye,
   Settings,
   Sparkles,
+  AlertCircle,
 } from 'lucide-react';
 import { cn } from '../../lib/utils';
 import {
@@ -188,7 +189,7 @@ export function FlowchartImporter({
 
         {/* Content */}
         <TooltipProvider>
-          <div className="flex-1 overflow-hidden">
+          <div className="flex-1 overflow-hidden bg-background">
             {state.step === 'upload' && (
               <div className="h-full flex items-center justify-center p-6">
                 <UploadDropzone
@@ -220,6 +221,15 @@ export function FlowchartImporter({
               </div>
             )}
 
+            {state.step === 'preview' && !state.taskGraph && (
+              <div className="h-full flex items-center justify-center p-6">
+                <div className="text-center text-muted-foreground">
+                  <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
+                  <p>Loading preview...</p>
+                </div>
+              </div>
+            )}
+
             {state.step === 'configure' && (
               <div className="h-full overflow-y-auto p-6">
                 <ConfigurationPanel
@@ -234,10 +244,10 @@ export function FlowchartImporter({
               </div>
             )}
 
-            {state.step === 'generating' && state.progress && (
+            {state.step === 'generating' && (
               <div className="h-full flex items-center justify-center p-6">
                 <GenerationProgress
-                  progress={state.progress}
+                  progress={state.progress ?? { stage: 'parsing', percentage: 0, message: 'Starting...' }}
                   className="max-w-lg w-full"
                 />
               </div>
@@ -249,6 +259,25 @@ export function FlowchartImporter({
                   result={state.generateResult}
                   onClose={handleClose}
                 />
+              </div>
+            )}
+
+            {/* Error fallback - show error if step data is missing */}
+            {state.error && state.step !== 'upload' && (
+              <div className="h-full flex items-center justify-center p-6">
+                <div className="text-center max-w-md">
+                  <AlertCircle className="h-12 w-12 text-destructive mx-auto mb-4" />
+                  <p className="text-destructive font-medium mb-2">An error occurred</p>
+                  <p className="text-sm text-muted-foreground">{state.error}</p>
+                  <Button
+                    variant="outline"
+                    className="mt-4"
+                    onClick={() => goToStep('upload')}
+                  >
+                    <ChevronLeft className="h-4 w-4 mr-2" />
+                    Back to Upload
+                  </Button>
+                </div>
               </div>
             )}
           </div>

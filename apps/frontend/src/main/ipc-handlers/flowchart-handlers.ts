@@ -32,11 +32,16 @@ async function runFlowchartCommand(
     const pythonPath = pythonEnvManager.getPythonPath();
     const backendPath = getEffectiveSourcePath();
 
+    console.log('[Flowchart] Running command with args:', args);
+    console.log('[Flowchart] Python path:', pythonPath);
+    console.log('[Flowchart] Backend path:', backendPath);
+
     if (!pythonPath) {
+      console.error('[Flowchart] Python environment not initialized');
       resolve({
         success: false,
         stdout: '',
-        stderr: 'Python environment not initialized',
+        stderr: 'Python environment not initialized. Please wait for the project to load completely.',
       });
       return;
     }
@@ -61,6 +66,13 @@ async function runFlowchartCommand(
     });
 
     proc.on('close', (code: number | null) => {
+      console.log('[Flowchart] Command completed with code:', code);
+      if (stderr) {
+        console.log('[Flowchart] stderr:', stderr);
+      }
+      if (code !== 0) {
+        console.error('[Flowchart] Command failed. stdout:', stdout, 'stderr:', stderr);
+      }
       resolve({
         success: code === 0,
         stdout,
@@ -69,10 +81,11 @@ async function runFlowchartCommand(
     });
 
     proc.on('error', (err: Error) => {
+      console.error('[Flowchart] Spawn error:', err.message);
       resolve({
         success: false,
         stdout: '',
-        stderr: err.message,
+        stderr: `Failed to run Python command: ${err.message}`,
       });
     });
   });

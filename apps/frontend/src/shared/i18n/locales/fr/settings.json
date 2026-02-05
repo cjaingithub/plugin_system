@@ -48,6 +48,10 @@
     "terminal-fonts": {
       "title": "Polices de terminal",
       "description": "Personnaliser l'apparence des polices de terminal"
+    },
+    "plugins": {
+      "title": "Extensions",
+      "description": "Étendre Auto Claude avec des extensions"
     }
   },
   "apiProfiles": {

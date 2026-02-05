@@ -19,6 +19,7 @@ export * from './integrations';
 export * from './app-update';
 export * from './cli';
 export * from './flowchart';
+export * from './plugin';
 
 // IPC types (must be last to use types from other modules)
 export * from './ipc';
